@@ -123,6 +123,12 @@ angular.module('leaflet-directive')
         return L.layerGroup([tileLayer, utfLayer]);
       },
     },
+    fallback: {
+      mustHaveUrl: true,
+      createLayer: function(params) {
+        return L.tileLayer.fallback(params.url, params.options);
+      },
+    },
     wms: {
       mustHaveUrl: true,
       createLayer: function(params) {

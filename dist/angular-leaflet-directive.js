@@ -28,7 +28,7 @@
  */
 
 /*!
-*  angular-leaflet-directive  2015-11-06
+*  angular-leaflet-directive 0.10.1 2016-01-05
 *  angular-leaflet-directive - An AngularJS directive to easily interact with Leaflet maps
 *  git: https://github.com/tombatossals/angular-leaflet-directive
 */
@@ -1637,7 +1637,7 @@ angular.module('leaflet-directive')
       createLayer: function(params) {
         return new L.geoJson(params.data, {
           pointToLayer: function(feature, latlng) {
-            return L.marker(latlng, {icon: L.AwesomeMarkers.icon(params.icon)});
+            return L.marker(latlng, { icon: L.AwesomeMarkers.icon(params.icon) });
           },
         });
       },
@@ -1647,7 +1647,7 @@ angular.module('leaflet-directive')
       createLayer: function(params) {
         return new L.geoJson(params.data, {
           pointToLayer: function(feature, latlng) {
-            return L.marker(latlng, {icon: L.VectorMarkers.icon(params.icon)});
+            return L.marker(latlng, { icon: L.VectorMarkers.icon(params.icon) });
           },
         });
       },
@@ -1680,6 +1680,12 @@ angular.module('leaflet-directive')
         params.url = '//' + params.user + '.cartodb.com/api/v1/map/' + params.key + '/' + params.layer + '/{z}/{x}/{y}.grid.json';
         var utfLayer = utfGridCreateLayer(params);
         return L.layerGroup([tileLayer, utfLayer]);
+      },
+    },
+    fallback: {
+      mustHaveUrl: true,
+      createLayer: function(params) {
+        return L.tileLayer.fallback(params.url, params.options);
       },
     },
     wms: {
@@ -3824,7 +3830,7 @@ angular.module('leaflet-directive')
 
               leafletGeoJsonEvents.bindEvents(attrs.id, layer, null, feature,
                   leafletScope, maybeName,
-                  {resetStyleOnMouseout: geojson.resetStyleOnMouseout,
+                  { resetStyleOnMouseout: geojson.resetStyleOnMouseout,
                   mapId: attrs.id, });
             };
           }
@@ -3855,8 +3861,7 @@ angular.module('leaflet-directive')
           _remove(leafletGeoJSON);
         };
 
-        var _addGeojson = function(model, maybeName) {
-          var geojson = angular.copy(model);
+        var _addGeojson = function(geojson, maybeName) {
           if (!(isDefined(geojson) && isDefined(geojson.data))) {
             return;
           }
@@ -5210,7 +5215,7 @@ angular.module('leaflet-directive')
         model: model,
       };
       if (isDefined(layerName))
-          angular.extend(toSend, {layerName: layerName});
+          angular.extend(toSend, { layerName: layerName });
 
       if (logic === 'emit') {
         scope.$emit(broadcastName, toSend);
